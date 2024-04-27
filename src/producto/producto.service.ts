@@ -29,7 +29,7 @@ export class ProductoService {
          
   async update(idproducto:string,productoDto:UpdateProductoDto): Promise<UpdateResult>{  //EL PROMISE ERA LA CLAVE PARA QUE DE TODOO
     
-   
+    console.log("ENTRA MI ID",idproducto )
     return await this.productoRepository.update(idproducto, productoDto)
 
   }
