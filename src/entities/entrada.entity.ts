@@ -1,4 +1,4 @@
-import { Column,CreateDateColumn,Entity,  JoinColumn,  ManyToOne,  OneToMany,  PrimaryGeneratedColumn, UpdateDateColumn} from "typeorm";
+import { Column,CreateDateColumn,DeleteDateColumn,Entity,  JoinColumn,  ManyToOne,  OneToMany,  PrimaryGeneratedColumn, UpdateDateColumn} from "typeorm";
 import { Producto } from "./producto.entity";
 
 
@@ -13,11 +13,16 @@ export class Entrada {
     @Column({ nullable: true })
      cantidad?:number ;
 
+     @Column({ nullable: true })
+     precioentrada?:number ;
+
      @Column(({ nullable: false }))
     idproducto?:string;
   
 
-    
+    @DeleteDateColumn()
+    deletedentrada:Date;
+   
      
     
     @CreateDateColumn({ type: "timestamp" })

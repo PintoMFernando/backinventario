@@ -14,6 +14,9 @@ export class CreateEntradaDto{
     @IsNumber()
     cantidad:number;
 
+    @IsNumber()
+    precioentrada:number;
+
     @IsString()
     idproducto?:string;
 

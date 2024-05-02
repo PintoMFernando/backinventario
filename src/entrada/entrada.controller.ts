@@ -29,15 +29,16 @@ export class EntradaController {
      }
  
     @Patch('/:identrada')
-     update(@Param('idobservaciones') idobservaciones: string, @Body() updateobservacionesDto: UpdateEntradaDto) {
-          return this.entradaService.update(idobservaciones, updateobservacionesDto);
+     update(@Param('identrada') identrada: string, @Body() updateentradaDto: UpdateEntradaDto) {
+      console.log("entra a patch",identrada);
+          return this.entradaService.update(identrada, updateentradaDto);
       }
  
  
       @Delete('/:identrada')
-      remove(@Param('idobservaciones') idobservaciones: string){
+      remove(@Param('identrada') identrada: string){
         // console.log("aqui esta",idobservaciones);
-         return this.entradaService.remove(idobservaciones);
+         return this.entradaService.remove(identrada);
       }  
  
 
