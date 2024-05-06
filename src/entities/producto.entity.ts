@@ -1,5 +1,6 @@
 import { Column,CreateDateColumn,Entity,  JoinTable,  OneToMany,  PrimaryGeneratedColumn, UpdateDateColumn} from "typeorm";
 import { Entrada } from "./entrada.entity";
+import { Salida } from "./salida.entity";
 
 
 @Entity({ name:'producto'})
@@ -42,6 +43,10 @@ export class Producto {
     @OneToMany(() => Entrada, (entrada) => entrada.identradas) 
     @JoinTable()
     entradas: Entrada[];
+
+    @OneToMany(() => Salida, (salida) => salida.idsalidas) 
+    @JoinTable()
+    salidas: Salida[];
    
     
 

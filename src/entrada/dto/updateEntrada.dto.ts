@@ -25,6 +25,10 @@ export class UpdateEntradaDto{
     @IsOptional()
     idproducto?:string;
 
+    @IsNumber()
+    @IsOptional()
+    tipo?:number;
+
 
    
 }

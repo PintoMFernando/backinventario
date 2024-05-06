@@ -28,17 +28,17 @@ export class EntradaController {
          return this.entradaService.create( entradaDto); 
      }
  
-    @Patch('/:identrada')
-     update(@Param('identrada') identrada: string, @Body() updateentradaDto: UpdateEntradaDto) {
+    @Patch('/:identrada/:nuevacantidad')
+     update(@Param('identrada') identrada: string,@Param('nuevacantidad') nuevacantidad:number, @Body() updateentradaDto: UpdateEntradaDto) {
       console.log("entra a patch",identrada);
-          return this.entradaService.update(identrada, updateentradaDto);
+          return this.entradaService.update(identrada, updateentradaDto,nuevacantidad);
       }
  
  
-      @Delete('/:identrada')
-      remove(@Param('identrada') identrada: string){
+      @Delete('/:identrada/:idproducto/:cantidad')
+      remove(@Param('identrada') identrada: string,@Param('idproducto') idproducto: string,@Param('cantidad') cantidad: number){
         // console.log("aqui esta",idobservaciones);
-         return this.entradaService.remove(identrada);
+         return this.entradaService.remove(identrada,idproducto,cantidad);
       }  
  
 

@@ -15,6 +15,7 @@ import { ServeStaticModule } from '@nestjs/serve-static';
 import { EntradaService } from './entrada/entrada.service';
 import { EntradaController } from './entrada/entrada.controller';
 import { EntradaModule } from './entrada/entrada.module';
+import { SalidaModule } from './salida/salida.module';
 
 @Module({
   imports: [
@@ -44,6 +45,8 @@ import { EntradaModule } from './entrada/entrada.module';
     UserModule,
    
     EntradaModule,
+   
+    SalidaModule,
     
 
    

@@ -52,15 +52,52 @@ export class EntradaService {
           .getRawMany();
       }
   
-  async update(idcentralizadormes:string,entradaDto:UpdateEntradaDto): Promise<UpdateResult>{  //EL PROMISE ERA LA CLAVE PARA QUE DE TODOO
+  async update(identrada:string,entradaDto:UpdateEntradaDto,nuevacantidad:number): Promise<UpdateResult>{  //EL PROMISE ERA LA CLAVE PARA QUE DE TODOO
+
     
+     
+    // const nuevaEntrada =  await this.entradaRepository.save(entradaDto)
+     console.log("aqui estan mis datos???" ,entradaDto,nuevacantidad)
+     const idProducto =String(entradaDto.idproducto);
+     const cantidad=Number(entradaDto.cantidad);
+    
+     if(nuevacantidad> 0){ //tipo1 aumenta
+      const updateProducto= await this.productoRepository
+         .createQueryBuilder()
+         .update(Producto)
+         .set({ stock: () => `"stock" + ${nuevacantidad}` }) //esto aumenta la cantidad 
+         .where({ idproducto: idProducto })
+         .execute();
+       //  return await this.entradaRepository.update(identrada, entradaDto)
+     }
+     if(nuevacantidad <0){ //tyipo2 disminuye
+      const updateProducto= await this.productoRepository
+         .createQueryBuilder()
+         .update(Producto)
+         .set({ stock: () => `"stock" - ${-nuevacantidad}` }) //esto aumenta la cantidad 
+         .where({ idproducto: idProducto })
+         .execute();
+         console.log(typeof entradaDto.identrada);
+         console.log("esta entrando o no??",updateProducto, "mi idproducto",idProducto, cantidad)
+         
+     }
+     return await this.entradaRepository.update(identrada, entradaDto)
+         //return updateProducto
    
-    return await this.entradaRepository.update(idcentralizadormes, entradaDto)
+ //   return await this.entradaRepository.update(identrada, entradaDto)
 
   }
 
 
-  async remove(identrada:string){
+  async remove(identrada:string,idproducto:string,cantidad:number){
+    const updateProducto= await this.productoRepository
+         .createQueryBuilder()
+         .update(Producto)
+         .set({ stock: () => `"stock" - ${cantidad}` }) //esto aumenta la cantidad 
+         .where({ idproducto: idproducto })
+         .execute();
+
+
    return await this.entradaRepository.softDelete(identrada);
   }
 
