@@ -16,6 +16,7 @@ import { EntradaService } from './entrada/entrada.service';
 import { EntradaController } from './entrada/entrada.controller';
 import { EntradaModule } from './entrada/entrada.module';
 import { SalidaModule } from './salida/salida.module';
+import { ReporteModule } from './reporte/reporte.module';
 
 @Module({
   imports: [
@@ -47,6 +48,8 @@ import { SalidaModule } from './salida/salida.module';
     EntradaModule,
    
     SalidaModule,
+   
+    ReporteModule,
     
 
    

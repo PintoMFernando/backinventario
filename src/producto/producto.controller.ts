@@ -89,6 +89,16 @@ export class ProductoController {
    }
 
 
+
+
+   @Get('reportefecha/:fechainicio/:fechafinal/:tiporeporte')
+   findAllByEntrada(@Param('fechainicio') fechainicio: string,@Param('fechafinal') fechafinal: string,@Param('tiporeporte') tiporeporte: string,) {
+      return   this.productoService.findAllByReporteFecha(fechainicio,fechafinal,tiporeporte);
+   }
+
+   
+
+
       
 
 

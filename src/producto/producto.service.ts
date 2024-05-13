@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { CreateProductoDto } from './dto/createProducto.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Producto } from 'src/entities/producto.entity';
-import { Repository, UpdateResult } from 'typeorm';
+import { Between, LessThanOrEqual, MoreThanOrEqual, Repository, UpdateResult } from 'typeorm';
 import { UpdateProductoDto } from './dto/updateProducto.dto';
 
 @Injectable()
@@ -60,8 +60,59 @@ export class ProductoService {
   }
 
 
+  async findAllByReporteFecha(fechainicio:string,fechafinal:string,tiporeporte:string){
+
+    const startDate = new Date(fechainicio);
+    const endDate = new Date(fechafinal);
+
+    endDate.setDate(endDate.getDate() + 1);
+    
+  /*  return await this.productoRepository.find({
+        where: {
+          created_at: Between(startDate, endDate),
+        },
+    });
+*/
+if(tiporeporte == "entrada"){
+  const productosConEntradasYSalidas = await this.productoRepository
+        .createQueryBuilder('producto')
+        .leftJoinAndSelect('producto.entradas', 'entrada')
+        .addSelect('producto.idproducto')
+        .addSelect('producto.nombre')
+        .addSelect('SUM(cantidad)', 'cantidadTotal')
+        .addSelect('SUM(precioentrada)', 'precioTotal')
+        .where('entrada.created_at BETWEEN :start AND :end', { start: startDate, end: endDate })
+        .groupBy('producto.idproducto,entrada.identrada')
+        
+        .getRawMany();
+  console.log("asdas",productosConEntradasYSalidas)
+    return productosConEntradasYSalidas;
+
+}
+else{
+  const productosConEntradasYSalidas = await this.productoRepository
+  .createQueryBuilder('producto')
+  .leftJoin('producto.salidas', 'salida')
+  .addSelect('producto.idproducto')
+  .addSelect('producto.nombre')
+  .addSelect('SUM(salida.cantidad)', 'cantidadTotal')
+  .addSelect('SUM(salida.preciototal)', 'precioTotal')
+  .where('salida.created_at BETWEEN :start AND :end', { start: startDate, end: endDate })
+  .groupBy('producto.idproducto')
+  .getRawMany();
+  
+
+return productosConEntradasYSalidas;
+
+}
+
+
+  }
+
  
 
 
       
 }
+
+
