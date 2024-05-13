@@ -23,6 +23,10 @@ export class UpdateEntradaDto{
 
     @IsString()
     @IsOptional()
+    detalle?:string ;
+
+    @IsString()
+    @IsOptional()
     idproducto?:string;
 
     @IsNumber()

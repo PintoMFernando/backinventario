@@ -16,6 +16,9 @@ export class Entrada {
      @Column({ nullable: true })
      precioentrada?:number ;
 
+     @Column({ nullable: true })
+     detalle?:string ;
+
      @Column(({ nullable: false }))
     idproducto?:string;
   

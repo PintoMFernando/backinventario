@@ -19,6 +19,9 @@ export class Salida {
     @Column({ nullable: true })
     preciototal?:number ;
 
+    @Column({ nullable: true })
+    descuento?:number ;
+
 
     @Column(({ nullable: false }))
     idproducto?:string;

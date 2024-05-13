@@ -20,6 +20,8 @@ export class CreateSalidaDto{
 
     @IsNumber()
     preciototal:number;
+    @IsNumber()
+    descuento?:number ;
 
     @IsString()
     idproducto?:string;

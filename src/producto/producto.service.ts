@@ -97,6 +97,7 @@ else{
   .addSelect('producto.nombre')
   .addSelect('SUM(salida.cantidad)', 'cantidadTotal')
   .addSelect('SUM(salida.preciototal)', 'precioTotal')
+  .addSelect('SUM(salida.descuento)', 'descuentoTotal')
   .where('salida.created_at BETWEEN :start AND :end', { start: startDate, end: endDate })
   .groupBy('producto.idproducto')
   .getRawMany();
