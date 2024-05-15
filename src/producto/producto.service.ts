@@ -110,6 +110,129 @@ return productosConEntradasYSalidas;
 
   }
 
+
+
+  async findAllByReporteFechaentrada(anio:number,mes:number){
+
+   
+const startDate = new Date(anio, mes - 1, 1); // Fecha de inicio del mes
+const endDate = new Date(anio, mes, 0); // Fecha de fin del mes
+
+const productosConEntradasYSalidas = await this.productoRepository
+    .createQueryBuilder('producto')
+    .leftJoinAndSelect('producto.entradas', 'entrada')
+    .addSelect('producto.idproducto')
+    .addSelect('producto.nombre')
+    .addSelect('SUM(entrada.cantidad)', 'cantidadTotal')
+    .addSelect('SUM(entrada.precioentrada)', 'precioTotal')
+    .where("entrada.created_at BETWEEN :startDate AND :endDate", { startDate, endDate })
+    .groupBy('producto.idproducto,entrada.identrada')
+    .getRawMany();
+
+
+    return productosConEntradasYSalidas;
+
+
+
+
+  }
+
+
+
+
+  
+  async findAllByReporteFechasalida(anio:number,mes:number){
+
+    const startDate = new Date(anio, mes - 1, 1); // Fecha de inicio del mes
+    const endDate = new Date(anio, mes, 0); // Fecha de fin del mes
+    
+    const productosConEntradasYSalidas = await this.productoRepository
+        .createQueryBuilder('producto')
+        .leftJoin('producto.salidas', 'salida')
+        .addSelect('producto.idproducto')
+        .addSelect('producto.nombre')
+        .addSelect('SUM(salida.cantidad)', 'cantidadTotal')
+        .addSelect('SUM(salida.preciototal)', 'precioTotal')
+        .addSelect('SUM(salida.descuento)', 'descuentoTotal')
+        .where("salida.created_at BETWEEN :startDate AND :endDate", { startDate, endDate })
+        .groupBy('producto.idproducto')
+        .getRawMany();
+    
+    
+        return productosConEntradasYSalidas;
+ 
+ 
+ 
+   }
+
+   //reporte dia
+
+
+   async findAllByReporteDiaentrada(fecha:string){
+
+   
+    const fechaDate = new Date(fecha);
+    
+console.log("fechaDate que es esto??",fechaDate)
+   // endDate.setDate(endDate.getDate() + 1);
+    
+    
+
+    
+
+    const productosConEntradasYSalidas = await this.productoRepository
+        .createQueryBuilder('producto')
+        .leftJoinAndSelect('producto.entradas', 'entrada')
+        .addSelect('SUM(entrada.cantidad)', 'cantidadTotal')
+    .addSelect('SUM(entrada.precioentrada)', 'precioTotal')
+        //.leftJoinAndSelect('producto.salidas', 'salida')
+        .where("DATE(entrada.created_at) = :fecha", { fecha: fechaDate.toISOString().split('T')[0] }) 
+        .groupBy('producto.idproducto,entrada.identrada')
+    .getRawMany();
+  console.log("asdas",productosConEntradasYSalidas)
+    return productosConEntradasYSalidas;
+
+
+return productosConEntradasYSalidas;
+
+    
+    
+    
+      }
+    
+    
+    
+    
+      
+      async findAllByReporteDiasalida(fecha:string){
+    
+        const fechaDate = new Date(fecha);
+        
+        const productosConEntradasYSalidas = await this.productoRepository
+            .createQueryBuilder('producto')
+            .leftJoinAndSelect('producto.salidas', 'salida')
+            .addSelect('producto.idproducto')
+            .addSelect('producto.nombre')
+            .addSelect('SUM(salida.cantidad)', 'cantidadTotal')
+            .addSelect('SUM(salida.preciototal)', 'precioTotal')
+            .addSelect('SUM(salida.descuento)', 'descuentoTotal')
+            .where("DATE(salida.created_at) = :fecha", { fecha: fechaDate.toISOString().split('T')[0] }) 
+            .groupBy('producto.idproducto,salida.idsalida')
+            .getRawMany();
+
+           
+        
+       
+
+        
+        
+            return productosConEntradasYSalidas;
+     
+     
+     
+       }
+    
+
  
 
 

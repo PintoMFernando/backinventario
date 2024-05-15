@@ -96,7 +96,38 @@ export class ProductoController {
       return   this.productoService.findAllByReporteFecha(fechainicio,fechafinal,tiporeporte);
    }
 
-   
+
+
+
+
+
+
+   @Get('reportefechaaniomesentrada/:anio/:mes')
+   findAllByEntradamesanioentrada(@Param('anio') anio: number,@Param('mes') mes: number) {
+      return   this.productoService.findAllByReporteFechaentrada(anio,mes);
+   }
+
+
+    @Get('reportefechaaniomesalida/:anio/:mes')
+   findAllByEntradamesaniosalida(@Param('anio') anio: number,@Param('mes') mes: number) {
+      return   this.productoService.findAllByReporteFechasalida(anio,mes);
+   }
+
+
+
+
+   @Get('reportediaentrada/:fecha')
+   findAllByEntradadia(@Param('fecha') fecha: string) {
+      return   this.productoService.findAllByReporteDiaentrada(fecha);
+   }
+
+
+    @Get('reportediasalida/:fecha')
+   findAllBySalidadia(@Param('fecha') fecha: string) {
+      return   this.productoService.findAllByReporteDiasalida(fecha);
+   }
+
+
 
 
       
