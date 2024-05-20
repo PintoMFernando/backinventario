@@ -4,6 +4,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Salida } from 'src/entities/salida.entity';
 import { Producto } from 'src/entities/producto.entity';
 import { Repository, UpdateResult } from 'typeorm';
+import { Proforma } from 'src/entities/proforma.entity';
 
 @Injectable()
 export class SalidaService {
@@ -11,7 +12,9 @@ export class SalidaService {
         @InjectRepository(Salida)
         private readonly entradaRepository: Repository<Salida>,
         @InjectRepository(Producto)
-        private readonly productoRepository: Repository<Producto>
+        private readonly productoRepository: Repository<Producto>,
+        @InjectRepository(Proforma)
+        private readonly proforomaRepository: Repository<Proforma>
       ) {}
     
       async create(createsalidasDto: CreateSalidaDto){
@@ -39,7 +42,7 @@ export class SalidaService {
       
     
       async findAllSalida() {
-        return await this.entradaRepository.find({ relations: ['idsalidas'] });
+        return await this.entradaRepository.find({ relations: ['idsalidas','proformas'] });
     }
     
        
@@ -94,5 +97,34 @@ export class SalidaService {
 
    return await this.entradaRepository.softDelete(idsalida);
   }
+
+  async findOneSalida(idsalida:string){
+    const salida = await this.entradaRepository
+  .createQueryBuilder("salida")
+  .leftJoinAndSelect("salida.idsalidas", "idsalidas")
+  .leftJoinAndSelect("salida.proformas", "proformas")
+  .where("salida.idsalida = :idsalida", { idsalida })
+  .getOne();
+return salida;
+
+}
+
+
+async findAllByadmFechasalida(anio:number,mes:number){
+
+  const startDate = new Date(anio, mes - 1, 1); // Primer día del mes
+  const endDate = new Date(anio, mes, 0); // Último día del mes
+
+  const salidas = await this.entradaRepository
+    .createQueryBuilder("salida")
+    .leftJoinAndSelect("salida.idsalidas", "idsalidas")
+    .leftJoinAndSelect("salida.proformas", "proformas")
+    .where("salida.created_at >= :startDate AND salida.created_at <= :endDate", { startDate, endDate })
+    .getMany();
+
+  return salidas;
+}  
+
+
 
 }

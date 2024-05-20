@@ -128,7 +128,25 @@ export class ProductoController {
    }
 
 
+   @Get('datosinicio/:fecha')
+   findAllByInicio(@Param('fecha') fecha: string) {
+      return   this.productoService.findAllByInicio(fecha);
+   }
 
+
+ 
+
+
+   @Get('admfechaaniomesentrada/:anio/:mes')
+   findAllByadmEntradamesanioentrada(@Param('anio') anio: number,@Param('mes') mes: number) {
+      return   this.productoService.findAllByadmFechaentrada(anio,mes);
+   }
+
+
+ 
+
+
+   
 
       
 

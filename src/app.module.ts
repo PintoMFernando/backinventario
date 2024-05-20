@@ -17,6 +17,9 @@ import { EntradaController } from './entrada/entrada.controller';
 import { EntradaModule } from './entrada/entrada.module';
 import { SalidaModule } from './salida/salida.module';
 import { ReporteModule } from './reporte/reporte.module';
+import { ProformaService } from './proforma/proforma.service';
+import { ProformaController } from './proforma/proforma.controller';
+import { ProformaModule } from './proforma/proforma.module';
 
 @Module({
   imports: [
@@ -50,13 +53,15 @@ import { ReporteModule } from './reporte/reporte.module';
     SalidaModule,
    
     ReporteModule,
+   
+    ProformaModule,
     
 
    
 
 
   ],
-  controllers: [AppController, ProductoController, UserController, EntradaController],
+  controllers: [AppController, ProductoController, UserController, EntradaController, ProformaController],
   providers: [AppService],
 
 })

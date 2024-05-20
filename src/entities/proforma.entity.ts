@@ -1,39 +1,38 @@
 import { Column,CreateDateColumn,DeleteDateColumn,Entity,  JoinColumn,  ManyToOne,  OneToMany,  OneToOne,  PrimaryGeneratedColumn, UpdateDateColumn} from "typeorm";
 import { Producto } from "./producto.entity";
-import { Proforma } from "./proforma.entity";
+import { Salida } from "./salida.entity";
 
 
-@Entity({ name:'salida'})
-export class Salida {
+@Entity({ name:'proforma'})
+export class Proforma {
 
    
     @Column({primary:true,type:'uuid'})
-    idsalida: string;
+    idproforma: string;
      
    
     @Column({ nullable: true })
-    cantidad?:number ;
+    nombre?:string ;
 
     @Column({ nullable: true })
-    preciosalida?:number ;
+    ci?:string ;
 
     @Column({ nullable: true })
-    preciototal?:number ;
+    telefono?:number ;
 
     @Column({ nullable: true })
-    descuento?:number ;
+    estado?: number;
+
+    @Column({ nullable: true })
+    tipo?: number;
 
 
     @Column(({ nullable: false }))
-    idproducto?:string;
-
-    @Column(({ nullable: true }))
-    proforma?:number ;
-
+    idsalida?:string;
   
 
     @DeleteDateColumn()
-    deletesalida:Date;
+    deleteproforma:Date;
    
      
     
@@ -43,14 +42,9 @@ export class Salida {
     @UpdateDateColumn({ type: "timestamp" })
     updated_at: Date;
    
-    @ManyToOne( () => Producto, (producto) => producto.salidas)
-    @JoinColumn({ name: 'idproducto' }) 
-    idsalidas: Producto[];
+    @OneToOne( () => Salida, (salida) => salida.proformas, { cascade: true })
+    @JoinColumn({ name: 'idsalida' }) 
+    salidas: Salida;
     
 
-    @OneToOne( () => Proforma, (proforma) => proforma.salidas)
-    
-    proformas: Proforma;
-    
-    
 }

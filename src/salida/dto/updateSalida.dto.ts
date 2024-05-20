@@ -31,6 +31,10 @@ export class UpdateEntradaDto{
     @IsOptional()
     descuento?:number ;
 
+    @IsNumber()
+    @IsOptional()
+    proforma?:number ;
+
     @IsString()
     @IsOptional()
     idproducto?:string;

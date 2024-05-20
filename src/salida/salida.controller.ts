@@ -42,6 +42,17 @@ export class SalidaController {
       }  
  
 
+      @Get('proformaimp/:idsalida')
+      findOneSalida(@Param('idsalida') idsalida: string) {
+         return   this.salidaService.findOneSalida(idsalida);
+      }
+   
+
+      @Get('admfechaaniomessalida/:anio/:mes')
+      findAllByadmEntradamesaniosalida(@Param('anio') anio: number,@Param('mes') mes: number) {
+         return   this.salidaService.findAllByadmFechasalida(anio,mes);
+      }
+
 
 
 
